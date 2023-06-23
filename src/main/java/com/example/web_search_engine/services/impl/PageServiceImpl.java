@@ -3,7 +3,7 @@ package com.example.web_search_engine.services.impl;
 import com.example.web_search_engine.model.Page;
 import com.example.web_search_engine.model.WebSite;
 import com.example.web_search_engine.repositories.PageRepository;
-import com.example.web_search_engine.repositories.SiteRepository;
+import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.services.PageService;
 import com.example.web_search_engine.services.handlers.ReadSiteRecursive;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
-    public synchronized void startCrawlSites(WebSite site, String userAgent, SiteRepository siteRepository) {
+    public synchronized void startCrawlSites(WebSite site, String userAgent, SearchRepository searchRepository) {
         ReadSiteRecursive readSite = new ReadSiteRecursive(site.getUrl(), site, userAgent);
         new ForkJoinPool().invoke(readSite);
         pageRepository.saveAll(ReadSiteRecursive.getPageList());

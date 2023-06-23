@@ -5,7 +5,7 @@ import com.example.web_search_engine.model.Lemma;
 import com.example.web_search_engine.model.Page;
 import com.example.web_search_engine.model.WebSite;
 import com.example.web_search_engine.model.dto.SearchData;
-import com.example.web_search_engine.repositories.SiteRepository;
+import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.services.impl.IndexServiceImpl;
 import com.example.web_search_engine.services.impl.LemmaServiceImpl;
 import com.example.web_search_engine.services.impl.PageServiceImpl;
@@ -28,14 +28,14 @@ public class SearchHandler {
     private final LemmaServiceImpl lemmaService;
     private final IndexServiceImpl indexService;
     private final PageServiceImpl pageService;
-    private final SiteRepository siteRepository;
+    private final SearchRepository searchRepository;
     private int searchCount;
 
     @Autowired
     public SearchHandler(LemmaServiceImpl lemmaService,
                          IndexServiceImpl indexService,
-                         PageServiceImpl pageService, SiteRepository siteRepository) throws IOException {
-        this.siteRepository = siteRepository;
+                         PageServiceImpl pageService, SearchRepository searchRepository) throws IOException {
+        this.searchRepository = searchRepository;
         this.lemmaFinder = LemmaFinder.getInstance();
         this.lemmaService = lemmaService;
         this.indexService = indexService;
@@ -96,7 +96,7 @@ public class SearchHandler {
         List<SearchData> result = new ArrayList<>();
         calculateRelevance(pages).forEach((key, value) -> {
             String snippet = buildSnippet(key.getContent(), strLemmas);
-            WebSite site = siteRepository.getById(key.getSiteId());
+            WebSite site = searchRepository.getById(key.getSiteId());
             result.add(new SearchData(site.getUrl(), site.getName(), key.getPath(),
                     Jsoup.parse(key.getContent()).title(),
                     snippet, value));

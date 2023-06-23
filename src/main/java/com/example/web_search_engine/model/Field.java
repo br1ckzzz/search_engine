@@ -1,17 +1,12 @@
 package com.example.web_search_engine.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "field")
-@Getter
-@Setter
-@ToString
+@Data
 @EqualsAndHashCode
 public class Field {
 

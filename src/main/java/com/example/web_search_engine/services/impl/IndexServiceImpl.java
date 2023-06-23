@@ -2,8 +2,9 @@ package com.example.web_search_engine.services.impl;
 
 import com.example.web_search_engine.config.ConfigProperty;
 import com.example.web_search_engine.model.*;
+import com.example.web_search_engine.repositories.FieldRepository;
 import com.example.web_search_engine.repositories.IndexRepository;
-import com.example.web_search_engine.repositories.SiteRepository;
+import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.response.ResponseService;
 import com.example.web_search_engine.response.impl.ErrorResponse;
 import com.example.web_search_engine.response.impl.Response;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -28,38 +30,38 @@ public class IndexServiceImpl implements IndexService {
     private final IndexRepository indexRepository;
     private final LemmaServiceImpl lemmaService;
     private final PageServiceImpl pageService;
-    private final FieldServiceImpl fieldService;
     private final ThreadPoolExecutor executor;
     private final IndexHandler indexHandler;
     private final ConfigProperty config;
-    private final SiteRepository siteRepository;
+    private final SearchRepository searchRepository;
+    private final FieldRepository fieldRepository;
 
     @Autowired
     public IndexServiceImpl(IndexRepository indexRepository,
                             LemmaServiceImpl lemmaService,
-                            PageServiceImpl pageService, FieldServiceImpl fieldService,
-                            IndexHandler indexHandler, ConfigProperty config, SiteRepository siteRepository) {
+                            PageServiceImpl pageService, IndexHandler indexHandler,
+                            ConfigProperty config, SearchRepository searchRepository, FieldRepository fieldRepository) {
         this.indexRepository = indexRepository;
         this.lemmaService = lemmaService;
         this.pageService = pageService;
-        this.fieldService = fieldService;
         this.config = config;
         this.indexHandler = indexHandler;
-        this.siteRepository = siteRepository;
+        this.searchRepository = searchRepository;
+        this.fieldRepository = fieldRepository;
         executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
     }
 
     @Override
     public void indexingSite(WebSite site) {
 
-        pageService.startCrawlSites(site, config.getUserAgent(), siteRepository);
-        List<Field> fields = fieldService.putAndGetFields();
+        pageService.startCrawlSites(site, config.getUserAgent(), searchRepository);
+        List<Field> fields = putAndGetFields();
         List<Page> pages = pageService.getPagesBySiteId(site.getId());
         lemmaService.createLemmas(pages);
         indexHandler.createIndexes(fields, pages, site);
         site.setStatusTime(LocalDateTime.now());
         site.setStatus(site.getStatus().equals(Status.FAILED) ? Status.FAILED : Status.INDEXED);
-        siteRepository.save(site);
+        searchRepository.save(site);
     }
 
     @Override
@@ -72,9 +74,9 @@ public class IndexServiceImpl implements IndexService {
             return response;
         }
 
-        List<WebSite> sites = siteRepository.findAll();
+        List<WebSite> sites = searchRepository.findAll();
         sites.forEach(site -> clearDataBaseBySite(site.getId()));
-        sites.forEach(site -> siteRepository.deleteById(site.getId()));
+        sites.forEach(site -> searchRepository.deleteById(site.getId()));
         sites.clear();
 
         config.getSites().forEach(s -> {
@@ -83,10 +85,10 @@ public class IndexServiceImpl implements IndexService {
             site.setUrl(s.getUrl());
             site.setStatus(Status.INDEXING);
             site.setStatusTime(LocalDateTime.now());
-            siteRepository.save(site);
+            searchRepository.save(site);
         });
 
-        siteRepository.findAll().forEach(site -> executor.submit(new RunIndexing(site, this)));
+        searchRepository.findAll().forEach(site -> executor.submit(new RunIndexing(site, this)));
         Response response = new Response();
         response.setResult(true);
         return response;
@@ -99,7 +101,7 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public ResponseService indexingOne(String url) {
 
-        WebSite webSite = siteRepository.findByUrl(url);
+        WebSite webSite = searchRepository.findByUrl(url);
         if (webSite != null) {
             clearDataBaseBySite(webSite.getId());
             executor.submit(new RunIndexing(webSite, this));
@@ -115,7 +117,7 @@ public class IndexServiceImpl implements IndexService {
                     "указанных в конфигурационном файле");
             return response;
         }
-        siteRepository.save(site);
+        searchRepository.save(site);
         executor.submit(new RunIndexing(site, this));
         Response response = new Response();
         response.setResult(true);
@@ -151,9 +153,9 @@ public class IndexServiceImpl implements IndexService {
         executor.shutdownNow();
 
         if (!isAlive()) {
-            siteRepository.findAll().forEach(site -> {
+            searchRepository.findAll().forEach(site -> {
                 site.setStatus(Status.FAILED);
-                siteRepository.save(site);
+                searchRepository.save(site);
             });
             Response response = new Response();
             response.setResult(true);
@@ -194,4 +196,28 @@ public class IndexServiceImpl implements IndexService {
     public List<Index> getIndexesByLemmaId(long lemmaId) {
         return indexRepository.findIndexByLemmaId(lemmaId);
     }
+
+    public List<Field> putAndGetFields() {
+
+        List<Field> fields = fieldRepository.findAll();
+
+        if (fields.isEmpty()) {
+
+            Field fieldTitle = new Field();
+            Field fieldBody = new Field();
+
+            fieldTitle.setName("title");
+            fieldTitle.setSelector("title");
+            fieldTitle.setWeight(1.0F);
+
+            fieldBody.setName("body");
+            fieldBody.setSelector("body");
+            fieldBody.setWeight(0.8F);
+
+            fields.add(fieldRepository.saveAndFlush(fieldTitle));
+            fields.add(fieldRepository.saveAndFlush(fieldBody));
+        }
+        return new ArrayList<>(fields);
+    }
+
 }

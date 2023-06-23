@@ -3,13 +3,12 @@ package com.example.web_search_engine.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.persistence.Index;
 
 @Entity
 @Table(name = "lemma", indexes = {@Index(name = "idx_lemma_site_id", columnList = "site_id")
 })
-@Getter
-@Setter
-@ToString
+@Data
 @EqualsAndHashCode
 public class Lemma {
 

@@ -2,7 +2,7 @@ package com.example.web_search_engine.services.handlers;
 
 import com.example.web_search_engine.model.*;
 import com.example.web_search_engine.repositories.IndexRepository;
-import com.example.web_search_engine.repositories.SiteRepository;
+import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.services.impl.LemmaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +20,14 @@ public class IndexHandler {
     private final IndexRepository indexRepository;
     private final LemmaServiceImpl lemmaService;
     private final LemmaFinder lemmaFinder;
-    private final SiteRepository siteRepository;
+    private final SearchRepository searchRepository;
 
     @Autowired
     public IndexHandler(IndexRepository indexRepository,
-                        LemmaServiceImpl lemmaService, SiteRepository siteRepository) throws IOException {
+                        LemmaServiceImpl lemmaService, SearchRepository searchRepository) throws IOException {
         this.indexRepository = indexRepository;
         this.lemmaService = lemmaService;
-        this.siteRepository = siteRepository;
+        this.searchRepository = searchRepository;
         this.lemmaFinder = LemmaFinder.getInstance();
     }
 
@@ -41,7 +41,7 @@ public class IndexHandler {
             indexes.addAll(buildIndexes(fields, page, contTitle, contBody, lemmasMap));
             if(indexes.size() > MAX_INDEXES_IN_LIST) {
                 webSite.setStatusTime(LocalDateTime.now());
-                siteRepository.save(webSite);
+                searchRepository.save(webSite);
                 indexRepository.saveAll(indexes);
                 indexes.clear();
             }

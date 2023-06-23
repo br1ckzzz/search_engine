@@ -1,6 +1,7 @@
 package com.example.web_search_engine.model;
 
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,9 +12,7 @@ import javax.persistence.*;
 @Table(name = "`index`", indexes = {
         @javax.persistence.Index(name = "idx_index_lemma_id", columnList = "lemma_id")
 })
-@Getter
-@Setter
-@ToString
+@Data
 public class Index {
 
     @Id

@@ -2,7 +2,7 @@ package com.example.web_search_engine.services.impl;
 
 import com.example.web_search_engine.model.WebSite;
 import com.example.web_search_engine.model.dto.SearchData;
-import com.example.web_search_engine.repositories.SiteRepository;
+import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.response.ResponseService;
 import com.example.web_search_engine.response.impl.ErrorResponse;
 import com.example.web_search_engine.response.impl.SearchResponse;
@@ -18,12 +18,12 @@ import java.util.Locale;
 public class SearchServiceImpl implements SearchService {
 
     private final SearchHandler searchHandler;
-    private final SiteRepository siteRepository;
+    private final SearchRepository searchRepository;
 
     @Autowired
-    public SearchServiceImpl(SearchHandler searchHandler, SiteRepository siteRepository) {
+    public SearchServiceImpl(SearchHandler searchHandler, SearchRepository searchRepository) {
         this.searchHandler = searchHandler;
-        this.siteRepository = siteRepository;
+        this.searchRepository = searchRepository;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class SearchServiceImpl implements SearchService {
             response.setError("Введен пустой запрос");
             return response;
         }
-        WebSite webSite = siteRepository.findByUrl(url);
+        WebSite webSite = searchRepository.findByUrl(url);
         List<SearchData> searches = searchHandler.searchData(webSite, query, offset, limit);
 
         if (searches.isEmpty()) {

@@ -4,7 +4,7 @@ import com.example.web_search_engine.model.WebSite;
 import com.example.web_search_engine.model.dto.Detailed;
 import com.example.web_search_engine.model.dto.Statistics;
 import com.example.web_search_engine.model.dto.Total;
-import com.example.web_search_engine.repositories.SiteRepository;
+import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.response.impl.StatisticResponse;
 import com.example.web_search_engine.services.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +19,22 @@ public class StatisticServiceImpl implements StatisticService {
     private final PageServiceImpl pageService;
     private final LemmaServiceImpl lemmaService;
     private final IndexServiceImpl indexService;
-    private final SiteRepository siteRepository;
+    private final SearchRepository searchRepository;
 
     @Autowired
     public StatisticServiceImpl(PageServiceImpl pageService,
                                 LemmaServiceImpl lemmaService,
-                                IndexServiceImpl indexService, SiteRepository siteRepository) {
+                                IndexServiceImpl indexService, SearchRepository searchRepository) {
         this.pageService = pageService;
         this.lemmaService = lemmaService;
         this.indexService = indexService;
-        this.siteRepository = siteRepository;
+        this.searchRepository = searchRepository;
     }
 
     public Statistics buildStatistics() {
         Statistics statistics = new Statistics();
         Total total = new Total();
-        total.setSites(siteRepository.count());
+        total.setSites(searchRepository.count());
         total.setPages(pageService.getPagesCount());
         total.setLemmas(lemmaService.getLemmaCount());
         total.setIndexing(indexService.isIndexing());
@@ -45,7 +45,7 @@ public class StatisticServiceImpl implements StatisticService {
 
     public List<Detailed> detailedSites() {
         List<Detailed> detailedList = new ArrayList<>();
-        List<WebSite> sites = siteRepository.findAll();
+        List<WebSite> sites = searchRepository.findAll();
         sites.forEach(site -> {
             Detailed detailed = new Detailed();
             detailed.setUrl(site.getUrl());
