@@ -1,15 +1,14 @@
 package com.example.web_search_engine.model.dto;
 
 import com.example.web_search_engine.model.Status;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class Detailed {
     private String url;
     private String name;

@@ -1,14 +1,9 @@
 package com.example.web_search_engine.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
-@Setter
-@Getter
-@ToString
+@Data
 public class SearchData {
 
     private String site;
