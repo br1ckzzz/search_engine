@@ -1,4 +1,4 @@
-package com.example.web_search_engine.services.handlers;
+package com.example.web_search_engine.handlers;
 
 import com.example.web_search_engine.model.*;
 import com.example.web_search_engine.repositories.IndexRepository;

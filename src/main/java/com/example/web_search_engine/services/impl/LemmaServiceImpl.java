@@ -4,7 +4,7 @@ import com.example.web_search_engine.model.Lemma;
 import com.example.web_search_engine.model.Page;
 import com.example.web_search_engine.repositories.LemmaRepository;
 import com.example.web_search_engine.services.LemmaService;
-import com.example.web_search_engine.services.handlers.LemmaFinder;
+import com.example.web_search_engine.handlers.LemmaFinder;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

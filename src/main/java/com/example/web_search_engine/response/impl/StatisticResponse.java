@@ -1,6 +1,6 @@
 package com.example.web_search_engine.response.impl;
 
-import com.example.web_search_engine.model.dto.Statistics;
+import com.example.web_search_engine.dto.Statistics;
 import com.example.web_search_engine.response.ResponseService;
 import lombok.Getter;
 import lombok.Setter;

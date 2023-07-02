@@ -1,6 +1,6 @@
 package java.com.example.web_search_engine.services.handlers;
 
-import com.example.web_search_engine.services.handlers.LemmaFinder;
+import com.example.web_search_engine.handlers.LemmaFinder;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;

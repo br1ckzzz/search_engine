@@ -1,4 +1,4 @@
-package com.example.web_search_engine.services.handlers;
+package com.example.web_search_engine.handlers;
 
 import com.example.web_search_engine.model.Page;
 import com.example.web_search_engine.model.Status;

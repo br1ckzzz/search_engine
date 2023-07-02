@@ -1,7 +1,7 @@
 package java.com.example.web_search_engine.services.handlers;
 
 import com.example.web_search_engine.model.*;
-import com.example.web_search_engine.services.handlers.IndexHandler;
+import com.example.web_search_engine.handlers.IndexHandler;
 import com.example.web_search_engine.services.impl.IndexServiceImpl;
 import com.example.web_search_engine.services.impl.LemmaServiceImpl;
 import org.junit.Assert;

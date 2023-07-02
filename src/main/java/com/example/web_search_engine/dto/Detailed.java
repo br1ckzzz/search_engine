@@ -1,4 +1,4 @@
-package com.example.web_search_engine.model.dto;
+package com.example.web_search_engine.dto;
 
 import com.example.web_search_engine.model.Status;
 import lombok.Data;

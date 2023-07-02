@@ -1,13 +1,13 @@
 package com.example.web_search_engine.services.impl;
 
 import com.example.web_search_engine.model.WebSite;
-import com.example.web_search_engine.model.dto.SearchData;
+import com.example.web_search_engine.dto.SearchData;
 import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.response.ResponseService;
 import com.example.web_search_engine.response.impl.ErrorResponse;
 import com.example.web_search_engine.response.impl.SearchResponse;
 import com.example.web_search_engine.services.SearchService;
-import com.example.web_search_engine.services.handlers.SearchHandler;
+import com.example.web_search_engine.handlers.SearchHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

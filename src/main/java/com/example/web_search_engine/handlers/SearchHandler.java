@@ -1,10 +1,10 @@
-package com.example.web_search_engine.services.handlers;
+package com.example.web_search_engine.handlers;
 
 import com.example.web_search_engine.model.Index;
 import com.example.web_search_engine.model.Lemma;
 import com.example.web_search_engine.model.Page;
 import com.example.web_search_engine.model.WebSite;
-import com.example.web_search_engine.model.dto.SearchData;
+import com.example.web_search_engine.dto.SearchData;
 import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.services.impl.IndexServiceImpl;
 import com.example.web_search_engine.services.impl.LemmaServiceImpl;

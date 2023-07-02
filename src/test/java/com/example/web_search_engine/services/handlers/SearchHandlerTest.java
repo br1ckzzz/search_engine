@@ -2,7 +2,7 @@ package java.com.example.web_search_engine.services.handlers;
 
 import com.example.web_search_engine.model.Lemma;
 import com.example.web_search_engine.model.WebSite;
-import com.example.web_search_engine.services.handlers.SearchHandler;
+import com.example.web_search_engine.handlers.SearchHandler;
 import com.example.web_search_engine.services.impl.LemmaServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;

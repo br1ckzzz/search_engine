@@ -1,4 +1,4 @@
-package com.example.web_search_engine.services.handlers;
+package com.example.web_search_engine.handlers;
 
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;

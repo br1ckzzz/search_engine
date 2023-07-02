@@ -2,7 +2,7 @@ package java.com.example.web_search_engine.services.impl;
 
 import com.example.web_search_engine.response.ResponseService;
 import com.example.web_search_engine.response.impl.ErrorResponse;
-import com.example.web_search_engine.services.handlers.SearchHandler;
+import com.example.web_search_engine.handlers.SearchHandler;
 import com.example.web_search_engine.services.impl.SearchServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

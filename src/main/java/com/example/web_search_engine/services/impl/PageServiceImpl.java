@@ -5,7 +5,7 @@ import com.example.web_search_engine.model.WebSite;
 import com.example.web_search_engine.repositories.PageRepository;
 import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.services.PageService;
-import com.example.web_search_engine.services.handlers.ReadSiteRecursive;
+import com.example.web_search_engine.handlers.ReadSiteRecursive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

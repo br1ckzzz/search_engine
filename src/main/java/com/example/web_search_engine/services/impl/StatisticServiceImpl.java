@@ -1,9 +1,9 @@
 package com.example.web_search_engine.services.impl;
 
 import com.example.web_search_engine.model.WebSite;
-import com.example.web_search_engine.model.dto.Detailed;
-import com.example.web_search_engine.model.dto.Statistics;
-import com.example.web_search_engine.model.dto.Total;
+import com.example.web_search_engine.dto.Detailed;
+import com.example.web_search_engine.dto.Statistics;
+import com.example.web_search_engine.dto.Total;
 import com.example.web_search_engine.repositories.SearchRepository;
 import com.example.web_search_engine.response.impl.StatisticResponse;
 import com.example.web_search_engine.services.StatisticService;
