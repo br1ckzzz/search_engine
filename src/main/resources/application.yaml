@@ -31,12 +31,12 @@
      -
        url: http://www.playback.ru
        name: PlayBack.ru
-#     -
-#       url: http://radiomv.ru
-#       name: Radio MV
-#     -
-#       url: https://dimonvideo.ru
-#       name: Димон
+     -
+       url: http://radiomv.ru
+       name: Radio MV
+     -
+       url: https://dimonvideo.ru
+       name: Димон
 #     -
 #       url: https://ipfran.ru/
 #       name: Федеральный исследовательский центр
